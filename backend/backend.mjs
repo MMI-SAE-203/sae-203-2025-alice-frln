@@ -45,3 +45,12 @@ export async function activiteByInviteName(NameInvite) {
 export async function addNewMovie(newMovie) {
     await pb.collection('Films').create(newMovie) ;
 }
+
+export async function addNewActivite(newActivite) {
+    await pb.collection('activites').create(newActivite) ;
+}
+
+export async function updateMovieById(idMovie, data) {
+    const updatedRecord = await pb.collection('Films').update(idMovie, data);
+    return updatedRecord;
+}

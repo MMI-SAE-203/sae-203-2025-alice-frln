@@ -1,4 +1,4 @@
-import { allsortedMovieDate, allsortedActiviteDate, allSortedInviteName, oneIDmovie, oneIDactivite, oneIDinvite, activiteByInviteID, activiteByInviteName, addNewMovie } from './backend.mjs' ;
+import { allsortedMovieDate, allsortedActiviteDate, allSortedInviteName, oneIDmovie, oneIDactivite, oneIDinvite, activiteByInviteID, activiteByInviteName, addNewMovie, addNewActivite, updateMovieById } from './backend.mjs' ;
 
 // try {
 //     const sortedMovieDateRecord = await allsortedMovieDate() ;
@@ -56,15 +56,33 @@ import { allsortedMovieDate, allsortedActiviteDate, allSortedInviteName, oneIDmo
 //         console.error(e);
 //     }  
 
-try {
-    const newMovie = {
-        "titre_film": "Test de création d'un film",
-        "genre": "fiction",
-        "bande_annonce": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-        "date_projection": "2025-07-07 12:00:00",
-    };
+// try {
+//     const newMovie = {
+//         "titre_film": "Test de création d'un film",
+//         "genre": "fiction",
+//         "bande_annonce": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+//         "date_projection": "2025-07-07 12:00:00",
+//     };
 
-    await addNewMovie(newMovie);
-} catch (e) {
-    console.error(e);
-}
+//     await addNewMovie(newMovie);
+// } catch (e) {
+//     console.error(e);
+// }
+
+// try {
+//         const newActivite = {
+//             "titre": "Test de création d'une activité",
+//             "type": "debat",
+//             "anime_par": "6e9i3u2fy55weco",
+//         };
+    
+//         await addNewActivite(newActivite);
+//     } catch (e) {
+//         console.error(e);
+//     }
+
+const data = {
+        "titre_film": "test de modification",
+    };
+    
+    await updateMovieById('sjdv89er11jm32b', data);
