@@ -1,4 +1,4 @@
-import { allsortedMovieDate, allsortedActiviteDate, allSortedInviteName, oneIDmovie, oneIDactivite, oneIDinvite, activiteByInviteID, activiteByInviteName } from './backend.mjs' ;
+import { allsortedMovieDate, allsortedActiviteDate, allSortedInviteName, oneIDmovie, oneIDactivite, oneIDinvite, activiteByInviteID, activiteByInviteName, addNewMovie } from './backend.mjs' ;
 
 // try {
 //     const sortedMovieDateRecord = await allsortedMovieDate() ;
@@ -49,9 +49,22 @@ import { allsortedMovieDate, allsortedActiviteDate, allSortedInviteName, oneIDmo
 //     console.error(e) ;
 //     };
 
+// try {
+//         const activiteByInviteNameRecord = await activiteByInviteName("Martin");
+//         console.table(activiteByInviteNameRecord);
+//     } catch (e) {
+//         console.error(e);
+//     }  
+
 try {
-        const activiteByInviteNameRecord = await activiteByInviteName("Martin");
-        console.table(activiteByInviteNameRecord);
-    } catch (e) {
-        console.error(e);
-    }    
+    const newMovie = {
+        "titre_film": "Test de création d'un film",
+        "genre": "fiction",
+        "bande_annonce": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "date_projection": "2025-07-07 12:00:00",
+    };
+
+    await addNewMovie(newMovie);
+} catch (e) {
+    console.error(e);
+}

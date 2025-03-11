@@ -41,3 +41,7 @@ export async function activiteByInviteName(NameInvite) {
     
     return activiteByInviteNameRecord;
     }
+
+export async function addNewMovie(newMovie) {
+    await pb.collection('Films').create(newMovie) ;
+}
