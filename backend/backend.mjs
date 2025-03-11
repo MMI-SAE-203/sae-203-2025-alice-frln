@@ -36,11 +36,6 @@ export async function activiteByInviteID (IDinvite) {
     return activiteByInviteRecord ;
     }
 
-// export async function activiteByInviteName (NameInvite) {
-//     const activiteByInviteNameRecord = await pb.collection('invites').getFullList({ filter : `nom = '${NameInvite}'`, }) ;
-//     return activiteByInviteNameRecord ;
-//     }
-
 export async function activiteByInviteName(NameInvite) {
     const activiteByInviteNameRecord = await pb.collection('activites').getFullList({filter: `anime_par.nom = '${NameInvite}'`,});
     

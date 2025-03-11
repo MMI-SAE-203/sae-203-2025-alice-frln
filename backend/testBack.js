@@ -50,7 +50,7 @@ import { allsortedMovieDate, allsortedActiviteDate, allSortedInviteName, oneIDmo
 //     };
 
 try {
-        const activiteByInviteNameRecord = await activiteByInviteName('Miyazaki');
+        const activiteByInviteNameRecord = await activiteByInviteName("Martin");
         console.table(activiteByInviteNameRecord);
     } catch (e) {
         console.error(e);
