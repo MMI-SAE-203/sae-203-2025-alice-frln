@@ -1,0 +1,53 @@
+---
+import { Image } from 'astro:assets';
+import LogoFooter from '../assets/img/logo_titre_et_texte.webp';
+import IconFacebook from '../assets/icon-vectors/icon_facebook.svg';
+import IconX from '../assets/icon-vectors/icon_x.svg';
+import IconTiktok from '../assets/icon-vectors/vector_tiktok.svg';
+import IconInstagram from '../assets/icon-vectors/icon_instagram.svg';
+import IconYoutube from '../assets/icon-vectors/icon_youtbe.svg';
+---
+
+<footer class="bg-[#ECBBDB] text-black py-6 px-4 flex flex-col items-center text-center space-y-6">
+    <Image src={LogoFooter} alt="Les Cinés-Echos" class="w-24" />
+
+    <div class="text-center">
+        <h3 class="font-bold text-lg">Contact</h3>
+        <address class="not-italic text-sm space-y-1">
+            <p>123 Rue du Cinéma, Héricourt, France</p>
+            <p><a href="mailto:info@lescinesechos.com" class="underline">info@lescinesechos.com</a></p>
+            <p>Téléphone : +33 1 23 45 67 89</p>
+        </address>
+    </div>
+
+    <div class="text-center">
+        <h3 class="font-bold text-lg">Réseaux sociaux</h3>
+        <ul class="flex justify-center space-x-4 mt-2">
+            <li>
+                <a href="/" aria-label="facebook">
+                    <IconFacebook class="w-6 h-6" />
+                </a>
+            </li>
+            <li>
+                <a href="/" aria-label="x">
+                    <IconX class="w-6 h-6" />
+                </a>
+            </li>
+            <li>
+                <a href="/" aria-label="tiktok">
+                    <IconTiktok class="w-6 h-6" />
+                </a>
+            </li>
+            <li>
+                <a href="/" aria-label="instagram">
+                    <IconInstagram class="w-6 h-6" />
+                </a>
+            </li>
+            <li>
+                <a href="/" aria-label="youtube">
+                    <IconYoutube class="w-6 h-6" />
+                </a>
+            </li>
+        </ul>
+    </div>
+</footer>

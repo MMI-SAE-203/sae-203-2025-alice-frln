@@ -1,0 +1,32 @@
+---
+import { Image } from 'astro:assets';
+import Logo from '../assets/img/logo.webp';
+---
+
+<header>
+    <a href="/">
+        <Image src={Logo} alt="/" />
+    </a>
+    <button aria-label="menu" aria-expanded="false" aria-controls="mainNav">   
+        <span aria-hidden="true"></span>
+    </button>
+    <nav id="mainNav" aria-hidden="true">
+        <ul>
+            <li>
+                <a href="./index.html">Page d'accueil</a>
+            </li>
+            <li>
+                <a href="./programme.html">Programme</a>
+            </li>
+            <li>
+                <a href="./a_propos.html">À propos</a>
+            </li>
+            <li>
+                <a href="./films.html">Films</a>
+            </li>
+            <li>
+                <a href="./infos_pratiques.html">Infos pratiques</a>
+            </li>
+        </ul>
+    </nav>
+</header>
