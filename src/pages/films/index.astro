@@ -1,0 +1,24 @@
+---
+import Layout from '../../layouts/LayoutWithHero.astro';
+import Card from '../../components/MovieCard.astro';
+import { getMovies } from '../../../backend/backend.mjs';
+import imgHero from '../../assets/img/hero_films.webp';
+
+let message = '';
+
+const films = await getMovies();
+console.log(films);
+
+const title = "Conservatoire Henri Dutilleux";
+const subTitle = "Conservatoire à Rayonnement Départemental du Grand Belfort";
+const description = "Le Conservatoire Henri Dutilleux de Belfort vous accueille pour découvrir la musique, la danse et le théâtre.";
+---
+
+<Layout title={title} description={description} subTitle={subTitle} src={imgHero} alt="Violoncelliste" classContent="">
+    <Fragment slot="content">
+        <div class="viewMode === 'grid' ? 'grid grid-cols-1 lg:grid-cols-3 gap-4' : 'flex flex-col'"
+    >
+      {films && films.map((film) => <Card {...film} />)}
+    </div>
+    </Fragment>
+  </Layout>

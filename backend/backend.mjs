@@ -54,3 +54,16 @@ export async function updateMovieById(idMovie, data) {
     const updatedRecord = await pb.collection('Films').update(idMovie, data);
     return updatedRecord;
 }
+
+export async function getMovies() {
+    try {
+        let data = await pb.collection('Films').getFullList({
+            sort: 'date_projection',
+        });
+
+        return data;
+    } catch (error) {
+        console.log('Une erreur est survenue en lisant la liste des films', error);
+        return null;
+    }
+}

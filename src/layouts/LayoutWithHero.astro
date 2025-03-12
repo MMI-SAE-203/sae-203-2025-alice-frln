@@ -14,7 +14,7 @@ const { title, description, subTitle, src, alt, classContent = "max-w-2xl mx-6 m
       )}
     </div>
 
-    <div class="relative z-[1] row-start-2 flex items-center -mx-6 px-6 bg-white text-xl leading-normal lg:text-3xl lg:col-span-9 lg:mx-0 lg:pl-0 lg:before:absolute lg:before:top-0 lg:before:ml-[-100%] lg:before:h-full lg:before:w-full lg:before:bg-white">
+    <div class="relative z-[1] row-start-2 flex items-center -mx-6 px-6 text-xl leading-normal lg:text-3xl lg:col-span-9 lg:mx-0 lg:pl-0 lg:before:absolute lg:before:top-0 lg:before:ml-[-100%] lg:before:h-full lg:before:w-full lg:before:bg-white w-full">
       <slot name="chapo"/>
     </div>
     <Picture 
@@ -25,7 +25,6 @@ const { title, description, subTitle, src, alt, classContent = "max-w-2xl mx-6 m
 			widths={[540, 1024, src.width]}
 			sizes={`(max-width: 540px) 540px, (max-width: 1024px) 1024px, ${src.width}px`}
 		/>
-    <slot name="patterns"/>
   </div>
   <div class={classContent}>
     <slot name="content"/>

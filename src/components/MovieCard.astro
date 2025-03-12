@@ -1,0 +1,13 @@
+---
+import '../styles/global.css';
+const film = Astro.props;
+---
+
+<div>
+    <img src={film.affiche} alt="/"/>
+    <h2>{film.titre_film}</h2>
+    <a href={`/films/${film.id}`}  
+       >
+        Voir plus
+    </a>
+</div>
