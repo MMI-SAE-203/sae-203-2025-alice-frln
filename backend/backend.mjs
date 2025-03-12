@@ -1,6 +1,8 @@
 import PocketBase from 'pocketbase' ;
 const pb = new PocketBase('http://127.0.0.1:8090') ;
 
+export { pb };
+
 export async function allsortedMovieDate () {
     const sortedMovieDateRecord = await pb.collection('Films').getFullList({ sort : 'date_projection', }) ;
     return sortedMovieDateRecord ;
@@ -16,10 +18,26 @@ export async function allSortedInviteName () {
     return sortedInviteNameRecord ;
     }
 
+// export async function oneIDmovie(id) {
+//     const IDmovieRecord = await pb.collection('Films').getOne(id) ;
+//     return IDmovieRecord ;
+//     }
+
 export async function oneIDmovie(id) {
-    const IDmovieRecord = await pb.collection('Films').getOne(id) ;
-    return IDmovieRecord ;
+    try {
+        const movie = await pb.collection('Films').getOne(id);
+
+        return {
+            ...movie,
+            affiche: movie.affiche 
+                ? pb.files.getUrl(movie, movie.affiche) 
+                : null,
+        };
+    } catch (error) {
+        console.error("Erreur lors de la récupération du film :", error);
+        return null;
     }
+}
     
 export async function oneIDactivite(id) {
     const IDactiviteRecord = await pb.collection('activites').getOne(id) ;
@@ -55,13 +73,33 @@ export async function updateMovieById(idMovie, data) {
     return updatedRecord;
 }
 
+// export async function getMovies() {
+//     try {
+//         let data = await pb.collection('Films').getFullList({
+//             sort: 'date_projection',
+//         });
+
+//         return data;
+//     } catch (error) {
+//         console.log('Une erreur est survenue en lisant la liste des films', error);
+//         return null;
+//     }
+// }
+
 export async function getMovies() {
     try {
-        let data = await pb.collection('Films').getFullList({
+        let movies = await pb.collection('Films').getFullList({
             sort: 'date_projection',
         });
 
-        return data;
+        const updatedMovies = movies.map((movie) => ({
+            ...movie,
+            affiche: movie.affiche 
+                ? pb.files.getUrl(movie, movie.affiche) 
+                : null,
+        }));
+
+        return updatedMovies;
     } catch (error) {
         console.log('Une erreur est survenue en lisant la liste des films', error);
         return null;

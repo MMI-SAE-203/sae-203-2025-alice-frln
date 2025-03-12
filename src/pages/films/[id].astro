@@ -1,0 +1,20 @@
+---
+import { oneIDmovie } from '../../../backend/backend.mjs';
+import Layout  from '../../layouts/Layout.astro';
+
+const { id } = Astro.params;
+const film = await oneIDmovie(id);
+console.log(film);
+
+if(!film){
+   return Astro.redirect('/films');
+}
+
+---
+
+<Layout titre={film.titre_film}>
+    <h1 class="text-white">{film.titre_film}</h1>
+    <div>
+        <img src={film.affiche} alt="/"/>
+    </div>
+</Layout>
