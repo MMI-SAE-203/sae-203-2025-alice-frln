@@ -99,6 +99,26 @@ export async function getMovies() {
     }
 }
 
+export async function getActivites() {
+    try {
+        let activites = await pb.collection('activites').getFullList({
+            sort: 'date',
+        });
+
+        const updatedActivites = activites.map((activite) => ({
+            ...activite,
+            imageActivite: activite.imageActivite 
+                ? pb.files.getUrl(activite, activite.imageActivite) 
+                : null,
+        }));
+
+        return updatedActivites;
+    } catch (error) {
+        console.log('Une erreur est survenue en lisant la liste des activités', error);
+        return null;
+    }
+}
+
 export async function getInvites() {
     try {
         let invites = await pb.collection('invites').getFullList({
