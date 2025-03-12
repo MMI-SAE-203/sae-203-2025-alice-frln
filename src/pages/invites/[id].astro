@@ -1,12 +1,14 @@
 ---
-import { oneIDinvite } from '../../../backend/backend.mjs';
+import { oneIDinvite, allMoviesByInviteId } from '../../../backend/backend.mjs';
 import Layout  from '../../layouts/Layout.astro';
+import MovieCard from '../../components/MovieCard.astro';
 
 const { id } = Astro.params;
 const invite = await oneIDinvite(id);
-console.log(invite);
+const movies = await allMoviesByInviteId(id);
+console.log(invite, movies);
 
-if(!invite){
+if (!invite) {
    return Astro.redirect('/invites');
 }
 
@@ -15,9 +17,20 @@ if(!invite){
 <Layout titre={invite.nom}>
     <h1>{invite.nom} {invite.prenom}</h1>
     <div>
-        <img src={invite.photoInvite} alt="/"/>
+        <img src={invite.photoInvite} alt="{invite.nom} {invite.prenom}" />
         <p>{invite.role}</p>
         <p>Contact : {invite.mail}</p>
         <p>Biographie<br>{invite.biographie}</p>
+    </div>
+
+    <div>
+        <p>Projections et activités :</p>
+        <div>
+            {movies.length > 0 ? (
+                movies.map((movie) => <MovieCard {...movie} />)
+            ) : (
+                <p>Aucun film présenté par cet invité.</p>
+            )}
+        </div>
     </div>
 </Layout>
