@@ -40,9 +40,20 @@ export async function oneIDactivite(id) {
     }
     
 export async function oneIDinvite(id) {
-    const IDinviteRecord = await pb.collection('invites').getOne(id) ;
-    return IDinviteRecord ;
+    try {
+        const invite = await pb.collection('invites').getOne(id);
+
+        return {
+            ...invite,
+            photoInvite: invite.photoInvite
+                ? pb.files.getUrl(invite, invite.photoInvite) 
+                : null,
+        };
+    } catch (error) {
+        console.error("Erreur lors de la récupération de l'invité :", error);
+        return null;
     }
+}
 
 export async function activiteByInviteID (IDinvite) {
     const activiteByInviteRecord = await pb.collection('activites').getFullList({ filter : `anime_par = '${IDinvite}'`, }) ;
@@ -104,6 +115,27 @@ export async function getInvites() {
         return updatedInvites;
     } catch (error) {
         console.log('Une erreur est survenue en lisant la liste des invités', error);
+        return null;
+    }
+}
+
+export async function allMoviesByInviteId(id) {
+    try {
+        let movies = await pb.collection('Films').getFullList({
+            filter : `presente_par.id= '${id}'`,
+            expand : 'presente_par',
+        });
+
+        const updatedMoviesID = movies.map((movie) => ({
+            ...movie,
+            affiche: movie.affiche 
+                ? pb.files.getUrl(movie, movie.affiche) 
+                : null,
+        }));
+
+        return updatedMoviesID;
+    } catch (error) {
+        console.log('Une erreur est survenue en lisant la liste des films de l invité', error);
         return null;
     }
 }
