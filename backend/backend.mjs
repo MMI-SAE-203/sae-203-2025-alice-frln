@@ -35,9 +35,20 @@ export async function oneIDmovie(id) {
 }
     
 export async function oneIDactivite(id) {
-    const IDactiviteRecord = await pb.collection('activites').getOne(id) ;
-    return IDactiviteRecord ;
+    try {
+        const activite = await pb.collection('activites').getOne(id);
+
+        return {
+            ...activite,
+            imageActivite: activite.imageActivite 
+                ? pb.files.getUrl(activite, activite.imageActivite) 
+                : null,
+        };
+    } catch (error) {
+        console.error("Erreur lors de la récupération de l'activité :", error);
+        return null;
     }
+}
     
 export async function oneIDinvite(id) {
     try {

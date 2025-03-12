@@ -1,0 +1,20 @@
+---
+import { oneIDactivite } from '../../../backend/backend.mjs';
+import Layout from '../../layouts/Layout.astro';
+
+const { id } = Astro.params;
+const activite = await oneIDactivite(id);
+console.log(activite);
+
+if(!activite){
+   return Astro.redirect('/activites');
+}
+
+---
+
+<Layout titre={activite.titre}>
+    <h1 class="text-white">{activite.titre}</h1>
+    <div>
+        <img src={activite.imageActivite} alt="/"/>
+    </div>
+</Layout>
