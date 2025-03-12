@@ -1,6 +1,13 @@
 ---
-import Layout from '../layouts/Layout.astro';
----
+import LayoutWithHero from '../layouts/LayoutWithHero.astro';
+import imgHero from '../assets/img/hero_accueil.webp';
 
-<Layout>
-</Layout>
+const title = "Conservatoire Henri Dutilleux";
+const subTitle = "Conservatoire à Rayonnement Départemental du Grand Belfort";
+const description = "Le Conservatoire Henri Dutilleux de Belfort vous accueille pour découvrir la musique, la danse et le théâtre.";
+---
+<LayoutWithHero title={title} description={description} subTitle={subTitle} src={imgHero} alt="Violoncelliste" classContent="">
+  <Fragment slot="content">
+	  <p>Contenu principal de la page</p>
+  </Fragment>
+</LayoutWithHero>
