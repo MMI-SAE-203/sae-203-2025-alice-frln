@@ -15,8 +15,8 @@ const {
 
 const variantClass = {
   default: 'border-indigo-100 bg-indigo-50',
-  dark: 'border border-indigo-500 bg-indigo-500 text-white',
-  outlined: 'border-indigo-200 bg-red',
+  pink: 'border border-black bg-(--color-pink) text-black',
+  outlined: 'border-indigo-200 bg-red text-white',
 };
 
 const sizeClass = {
@@ -27,7 +27,7 @@ const sizeClass = {
 ---
 <a
   href={url}
-  class={`inline-flex items-center gap-2 text-indigo-500 border-2 font-bold rounded-lg transition duration-300 ease-in-out ${variantClass[variant]} ${sizeClass[size]}`}
+  class={`inline-flex items-center gap-2 border-2 font-bold rounded-lg transition duration-300 ease-in-out ${variantClass[variant]} ${sizeClass[size]}`}
 >
   <slot/>
   {text}

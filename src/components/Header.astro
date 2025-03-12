@@ -22,19 +22,19 @@ import Button from '../components/Button.astro';
 
     <nav
         id="mainNav"
-        class="fixed inset-0 flex flex-col items-center justify-center space-y-6 bg-indigo-50 opacity-0 invisible transition-opacity duration-300 lg:static lg:flex lg:flex-row lg:space-y-0 lg:bg-transparent lg:opacity-100 lg:visible"
+        class="fixed inset-0 flex flex-col items-center justify-center space-y-6 bg-(--color-dark-pink) opacity-0 invisible transition-opacity duration-300 lg:static lg:flex lg:flex-row lg:space-y-0 lg:bg-transparent lg:opacity-100 lg:visible"
         aria-hidden="true"
     >
         <ul class="flex flex-col items-center gap-4 text-lg font-medium lg:flex-row lg:gap-8">
-            <li><a href="./index.html" class="p-4 text-gray-600 hover:text-indigo-600 transition">Page d'accueil</a></li>
-            <li><a href="./programme.html" class="p-4 text-gray-600 hover:text-indigo-600 transition">Programme</a></li>
-            <li><a href="./a_propos.html" class="p-4 text-gray-600 hover:text-indigo-600 transition">À propos</a></li>
-            <li><a href="./films.html" class="p-4 text-gray-600 hover:text-indigo-600 transition">Films</a></li>
-            <li><a href="./infos_pratiques.html" class="p-4 text-gray-600 hover:text-indigo-600 transition">Infos pratiques</a></li>
+            <li><a href="./index.html" class="p-4 text-white hover:text-indigo-600 transition">Page d'accueil</a></li>
+            <li><a href="./programme.html" class="p-4 text-white hover:text-indigo-600 transition">Programme</a></li>
+            <li><a href="./a_propos.html" class="p-4 text-white hover:text-indigo-600 transition">À propos</a></li>
+            <li><a href="./films.html" class="p-4 text-white hover:text-indigo-600 transition">Films</a></li>
+            <li><a href="./infos_pratiques.html" class="p-4 text-white hover:text-indigo-600 transition">Infos pratiques</a></li>
         </ul>
         <div class="flex items-center justify-center gap-4 px-4">
             <Button variant="outlined" url="/login" text="Login" />
-            <Button variant="dark" url="/signup" text="Sign Up" />
+            <Button varian="pink" url="/signup" text="Sign Up" />
         </div>
     </nav>
 </header>
