@@ -1,0 +1,14 @@
+---
+
+const {...invite} = Astro.props;
+
+---
+
+<div>
+    <img src={invite.photoInvite} alt="/"/>
+    <h2 class="">{invite.nom} {invite.prenom}</h2>
+    <a href={`/invites/${invite.id}`}  
+       >
+        Voir plus
+    </a>
+</div>

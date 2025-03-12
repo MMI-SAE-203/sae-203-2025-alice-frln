@@ -18,11 +18,6 @@ export async function allSortedInviteName () {
     return sortedInviteNameRecord ;
     }
 
-// export async function oneIDmovie(id) {
-//     const IDmovieRecord = await pb.collection('Films').getOne(id) ;
-//     return IDmovieRecord ;
-//     }
-
 export async function oneIDmovie(id) {
     try {
         const movie = await pb.collection('Films').getOne(id);
@@ -73,19 +68,6 @@ export async function updateMovieById(idMovie, data) {
     return updatedRecord;
 }
 
-// export async function getMovies() {
-//     try {
-//         let data = await pb.collection('Films').getFullList({
-//             sort: 'date_projection',
-//         });
-
-//         return data;
-//     } catch (error) {
-//         console.log('Une erreur est survenue en lisant la liste des films', error);
-//         return null;
-//     }
-// }
-
 export async function getMovies() {
     try {
         let movies = await pb.collection('Films').getFullList({
@@ -102,6 +84,26 @@ export async function getMovies() {
         return updatedMovies;
     } catch (error) {
         console.log('Une erreur est survenue en lisant la liste des films', error);
+        return null;
+    }
+}
+
+export async function getInvites() {
+    try {
+        let invites = await pb.collection('invites').getFullList({
+            sort: 'nom',
+        });
+
+        const updatedInvites = invites.map((invite) => ({
+            ...invite,
+            photoInvite: invite.photoInvite
+                ? pb.files.getUrl(invite, invite.photoInvite) 
+                : null,
+        }));
+
+        return updatedInvites;
+    } catch (error) {
+        console.log('Une erreur est survenue en lisant la liste des invités', error);
         return null;
     }
 }
