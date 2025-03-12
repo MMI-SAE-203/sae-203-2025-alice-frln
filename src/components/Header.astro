@@ -1,32 +1,66 @@
 ---
 import { Image } from 'astro:assets';
 import Logo from '../assets/img/logo.webp';
+import Button from '../components/Button.astro';
 ---
 
-<header>
+<header class="flex items-center justify-between px-6 gap-8 border-b-2 border-indigo-100 h-20 bg-(--color-dark-gray)">
     <a href="/">
-        <Image src={Logo} alt="/" />
+        <Image src={Logo} alt="/" class="w-16 md:w-20" />
     </a>
-    <button aria-label="menu" aria-expanded="false" aria-controls="mainNav">   
-        <span aria-hidden="true"></span>
+
+    <button
+    id="menu-btn"
+    class="group relative z-10 flex h-3 w-6 flex-col justify-between lg:hidden *:block *:ease *:h-0.5 *:w-full *:transform *:rounded-full *:bg-white *:transition *:duration-300"
+    aria-label="Menu"
+    aria-controls="menu"
+    aria-expanded="false"
+    >
+        <span class="group-aria-expanded:translate-y-[5px] group-aria-expanded:rotate-45"></span>
+        <span class="group-aria-expanded:-translate-y-[5px] group-aria-expanded:-rotate-45"></span>
     </button>
-    <nav id="mainNav" aria-hidden="true">
-        <ul>
-            <li>
-                <a href="./index.html">Page d'accueil</a>
-            </li>
-            <li>
-                <a href="./programme.html">Programme</a>
-            </li>
-            <li>
-                <a href="./a_propos.html">À propos</a>
-            </li>
-            <li>
-                <a href="./films.html">Films</a>
-            </li>
-            <li>
-                <a href="./infos_pratiques.html">Infos pratiques</a>
-            </li>
+
+    <nav
+        id="mainNav"
+        class="fixed inset-0 flex flex-col items-center justify-center space-y-6 bg-indigo-50 opacity-0 invisible transition-opacity duration-300 lg:static lg:flex lg:flex-row lg:space-y-0 lg:bg-transparent lg:opacity-100 lg:visible"
+        aria-hidden="true"
+    >
+        <ul class="flex flex-col items-center gap-4 text-lg font-medium lg:flex-row lg:gap-8">
+            <li><a href="./index.html" class="p-4 text-gray-600 hover:text-indigo-600 transition">Page d'accueil</a></li>
+            <li><a href="./programme.html" class="p-4 text-gray-600 hover:text-indigo-600 transition">Programme</a></li>
+            <li><a href="./a_propos.html" class="p-4 text-gray-600 hover:text-indigo-600 transition">À propos</a></li>
+            <li><a href="./films.html" class="p-4 text-gray-600 hover:text-indigo-600 transition">Films</a></li>
+            <li><a href="./infos_pratiques.html" class="p-4 text-gray-600 hover:text-indigo-600 transition">Infos pratiques</a></li>
         </ul>
+        <div class="flex items-center justify-center gap-4 px-4">
+            <Button variant="outlined" url="/login" text="Login" />
+            <Button variant="dark" url="/signup" text="Sign Up" />
+        </div>
     </nav>
 </header>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+      const toggle = document.querySelector("#menu-btn");
+      const nav = document.querySelector("#mainNav");
+      const page = document.body;
+
+      if (toggle && nav) {
+          toggle.addEventListener("click", () => {
+              const isOpen = toggle.getAttribute("aria-expanded") === "true";
+              const isClosed = !isOpen;
+
+              toggle.setAttribute("aria-expanded", String(isClosed));
+
+              toggle.classList.toggle("aria-expanded");
+
+              nav.classList.toggle("opacity-100");
+              nav.classList.toggle("visible");
+              nav.classList.toggle("opacity-0");
+              nav.classList.toggle("invisible");
+
+              page.classList.toggle("noscroll", isClosed);
+          });
+      }
+  });
+</script>
