@@ -1,0 +1,227 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const title = "Contact - Les ciné-échos";
+---
+
+<Layout title={title}>
+  <main class="min-h-screen bg-black text-white">
+    <section class="relative py-16 md:py-24">
+      
+      <div class="container mx-auto px-4 relative z-10">
+        <div class="max-w-4xl mx-auto">
+          <h1 class="text-4xl md:text-5xl font-bold text-center mb-8">
+            <span class="text-[#b1ff65]">Contact</span>
+          </h1>
+          
+          <div class="bg-black/80 rounded-lg p-6 md:p-8 backdrop-blur-sm border border-[#b1ff65]/30">
+            <form 
+              id="contactForm" 
+              class="space-y-6"
+              x-data="{
+                sending: false,
+                success: false,
+                error: false,
+                submitForm() {
+                  this.sending = true;
+                  this.success = false;
+                  this.error = false;
+                  
+                  // Simuler l'envoi (à remplacer par votre vraie logique d'envoi)
+                  setTimeout(() => {
+                    this.sending = false;
+                    this.success = true;
+                    document.getElementById('contactForm').reset();
+                  }, 1000);
+                }
+              }"
+              @submit.prevent="submitForm()"
+            >
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label for="nom" class="block text-sm font-medium mb-2">Nom <span class="text-[#b1ff65]">*</span></label>
+                  <input 
+                    type="text" 
+                    id="nom" 
+                    name="nom" 
+                    required 
+                    class="w-full bg-gray-800 border border-gray-700 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#b1ff65] focus:border-transparent"
+                  />
+                </div>
+                
+                <div>
+                  <label for="prenom" class="block text-sm font-medium mb-2">Prénom <span class="text-[#b1ff65]">*</span></label>
+                  <input 
+                    type="text" 
+                    id="prenom" 
+                    name="prenom" 
+                    required 
+                    class="w-full bg-gray-800 border border-gray-700 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#b1ff65] focus:border-transparent"
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <label for="email" class="block text-sm font-medium mb-2">Email <span class="text-[#b1ff65]">*</span></label>
+                <input 
+                  type="email" 
+                  id="email" 
+                  name="email" 
+                  required 
+                  class="w-full bg-gray-800 border border-gray-700 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#b1ff65] focus:border-transparent"
+                />
+              </div>
+              
+              <div>
+                <label for="telephone" class="block text-sm font-medium mb-2">Téléphone</label>
+                <input 
+                  type="tel" 
+                  id="telephone" 
+                  name="telephone" 
+                  class="w-full bg-gray-800 border border-gray-700 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#b1ff65] focus:border-transparent"
+                />
+              </div>
+              
+              <div>
+                <label for="sujet" class="block text-sm font-medium mb-2">Sujet <span class="text-[#b1ff65]">*</span></label>
+                <select 
+                  id="sujet" 
+                  name="sujet" 
+                  required 
+                  class="w-full bg-gray-800 border border-gray-700 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#b1ff65] focus:border-transparent"
+                >
+                  <option value="">Sélectionnez un sujet</option>
+                  <option value="billetterie">Billetterie</option>
+                  <option value="programme">Programme</option>
+                  <option value="acces">Accès et logistique</option>
+                  <option value="presse">Presse et média</option>
+                  <option value="autre">Autre</option>
+                </select>
+              </div>
+              
+              <div>
+                <label for="message" class="block text-sm font-medium mb-2">Message <span class="text-[#b1ff65]">*</span></label>
+                <textarea 
+                  id="message" 
+                  name="message" 
+                  rows="5" 
+                  required 
+                  class="w-full bg-gray-800 border border-gray-700 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-[#b1ff65] focus:border-transparent"
+                ></textarea>
+              </div>
+              
+              <div class="flex items-start">
+                <div class="flex items-center h-5">
+                  <input 
+                    id="rgpd" 
+                    name="rgpd" 
+                    type="checkbox" 
+                    required 
+                    class="focus:ring-[#b1ff65] h-4 w-4 text-[#b1ff65] border-gray-700 rounded"
+                  />
+                </div>
+                <div class="ml-3 text-sm">
+                  <label for="rgpd" class="font-medium">J'accepte que mes données soient utilisées pour traiter ma demande <span class="text-[#b1ff65]">*</span></label>
+                </div>
+              </div>
+              
+              <div class="flex justify-center">
+                <button 
+                  type="submit" 
+                  class="bg-[#b1ff65] hover:bg-[#9de554] text-black font-bold py-2 px-6 rounded-md transition duration-300 flex items-center disabled:opacity-50"
+                  :disabled="sending"
+                >
+                  <span x-show="!sending">Envoyer</span>
+                  <span x-show="sending" class="flex items-center">
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Envoi en cours...
+                  </span>
+                </button>
+              </div>
+              
+              <div 
+                x-show="success" 
+                x-transition 
+                class="mt-4 p-4 bg-green-800/50 border border-green-500 text-white rounded-md"
+              >
+                Votre message a été envoyé avec succès. Nous vous répondrons dans les meilleurs délais.
+              </div>
+              
+              <div 
+                x-show="error" 
+                x-transition 
+                class="mt-4 p-4 bg-red-800/50 border border-red-500 text-white rounded-md"
+              >
+                Une erreur s'est produite lors de l'envoi de votre message. Veuillez réessayer ultérieurement.
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="py-12 bg-black/80">
+      <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+          <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">
+            <span class="text-[#b1ff65]">Informations</span>
+          </h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
+              <h3 class="text-xl font-bold mb-4">Adresse</h3>
+              <p class="mb-4">Les ciné-échos</p>
+              <p class="mb-4">1 rue du Festival</p>
+              <p>70400 Héricourt, France</p>
+              
+              <h3 class="text-xl font-bold mt-6 mb-4">Contact</h3>
+              <p class="mb-2">
+                <span class="block text-sm text-gray-400">Téléphone:</span>
+                <a href="tel:+33384282943" class="hover:text-[#b1ff65]">03 84 28 29 43</a>
+              </p>
+              <p>
+                <span class="block text-sm text-gray-400">Email:</span>
+                <a href="mailto:info@cine-echos.fr" class="hover:text-[#b1ff65]">info@cine-echos.fr</a>
+              </p>
+            </div>
+            
+            <div class="bg-gray-900/50 p-6 rounded-lg border border-gray-800">
+              <h3 class="text-xl font-bold mb-4">Horaires du festival</h3>
+              <p class="mb-2">
+                <span class="text-[#b1ff65]">Du Lundi 7 juillet au dimanche 13 juillet 2025</span>
+              </p>
+              <p class="mb-6">Ouverture des portes à 10h00 tous les jours</p>
+              
+              <h3 class="text-xl font-bold mb-4">Réseaux sociaux</h3>
+              <div class="flex space-x-4">
+                <a href="#" class="text-white hover:text-[#b1ff65]" aria-label="Facebook">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/>
+                  </svg>
+                </a>
+                <a href="#" class="text-white hover:text-[#b1ff65]" aria-label="Twitter">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                  </svg>
+                </a>
+                <a href="#" class="text-white hover:text-[#b1ff65]" aria-label="Instagram">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                </a>
+                <a href="#" class="text-white hover:text-[#b1ff65]" aria-label="YouTube">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</Layout>
