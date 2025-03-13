@@ -1,32 +1,33 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { Picture } from 'astro:assets';
+import { Image } from 'astro:assets';
 
-const { title, description, subTitle, src, alt, classContent = "max-w-2xl mx-6 my-16 lg:mx-auto" } = Astro.props;
+const { title, description, subTitle, subTitle2, src, alt, classContent = "max-w-2xl mx-6 my-16 lg:mx-auto" } = Astro.props;
 ---
 
 <Layout title={title} description={description}>
-  <div class="grille grid h-screen grid-rows-[4fr_1fr] relative lg:grid-rows-[3fr_1fr]">
-    <div class="my-12 space-y-8 self-end text-white z-[2] lg:col-span-9">
-      <h1>{title}</h1>
-      {subTitle && (
-      <h2 class="font-sans text-sm font-bold uppercase lg:text-lg">{subTitle}</h2>
-      )}
+  <div class="relative h-[40vh] md:h-[60vh] lg:h-[70vh] w-full">
+    <Image
+      src={src}
+      alt={alt}
+      class="duotone absolute inset-0 w-full h-full object-cover object-center"
+      quality={90}
+    />
+    
+    <div class="absolute inset-0 flex flex-col justify-center md:justify-end pb-0 md:pb-10 lg:pb-12 px-4 md:px-6 lg:px-12">
+      <div class="space-y-2 md:space-y-3 lg:space-y-4 text-white z-10 max-w-3xl">
+        <h1 class="text-3xl md:text-5xl lg:text-7xl">{title}</h1>
+        {subTitle && (
+          <h2 class="font-DMSans text-lg md:text-xl lg:text-2xl font-bold uppercase">{subTitle}</h2>
+        )}
+        {subTitle2 && (
+          <h3 class="font-DMSans text-base md:text-lg lg:text-xl font-bold">{subTitle2}</h3>
+        )}
+      </div>
     </div>
-
-    <div class="relative z-[1] row-start-2 flex items-center -mx-6 px-6 text-xl leading-normal lg:text-3xl lg:col-span-9 lg:mx-0 lg:pl-0 lg:before:absolute lg:before:top-0 lg:before:ml-[-100%] lg:before:h-full lg:before:w-full lg:before:bg-white w-full">
-      <slot name="chapo"/>
-    </div>
-    <Picture 
-      pictureAttributes={{ class: "duotone !absolute inset-0 object-cover" }} 
-			formats={['avif', 'webp']} 
-			src={src} 
-			alt={alt} 
-			widths={[540, 1024, src.width]}
-			sizes={`(max-width: 540px) 540px, (max-width: 1024px) 1024px, ${src.width}px`}
-		/>
   </div>
+
   <div class={classContent}>
-    <slot name="content"/>
+    <slot name="content" />
   </div>
 </Layout>

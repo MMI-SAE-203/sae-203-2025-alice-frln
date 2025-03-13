@@ -11,7 +11,7 @@ import Button from '../components/Button.astro';
 
     <button
     id="menu-btn"
-    class="group relative z-10 flex h-3 w-6 flex-col justify-between lg:hidden *:block *:ease *:h-0.5 *:w-full *:transform *:rounded-full *:bg-white *:transition *:duration-300"
+    class="group relative z-50 flex h-3 w-6 flex-col justify-between lg:hidden *:block *:ease *:h-0.5 *:w-full *:transform *:rounded-full *:bg-white *:transition *:duration-300"
     aria-label="Menu"
     aria-controls="menu"
     aria-expanded="false"
@@ -22,7 +22,7 @@ import Button from '../components/Button.astro';
 
     <nav
         id="mainNav"
-        class="fixed inset-0 flex flex-col items-center justify-center space-y-6 bg-(--color-dark-pink) opacity-0 invisible transition-opacity duration-300 lg:static lg:flex lg:flex-row lg:space-y-0 lg:bg-transparent lg:opacity-100 lg:visible"
+        class="fixed inset-0 flex flex-col items-center justify-center space-y-6 bg-(--color-dark-pink) opacity-0 invisible transition-opacity duration-300 z-40 lg:static lg:flex lg:flex-row lg:space-y-0 lg:bg-transparent lg:opacity-100 lg:visible"
         aria-hidden="true"
     >
         <ul class="flex flex-col items-center gap-4 text-lg font-medium lg:flex-row lg:gap-8">

@@ -18,25 +18,6 @@ export async function allSortedInviteName () {
     return sortedInviteNameRecord ;
     }
 
-// export async function oneIDmovie(id) {
-//     try {
-//         const movie = await pb.collection('Films').getOne(id);
-
-//         return {
-//             ...movie,
-//             affiche: movie.affiche 
-//                 ? pb.files.getUrl(movie, movie.affiche) 
-//                 : null,
-//             annee_sortie: movie.dateDeSortie 
-//                 ? new Date(movie.dateDeSortie).getFullYear() 
-//                 : "N/A",
-//         };
-//     } catch (error) {
-//         console.error("Erreur lors de la récupération du film :", error);
-//         return null;
-//     }
-// }
-
 export async function oneIDmovie(id) {
     try {
         const movie = await pb.collection('Films').getOne(id);
