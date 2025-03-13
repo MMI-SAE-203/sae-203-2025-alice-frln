@@ -113,6 +113,9 @@ export async function getMovies() {
             affiche: movie.affiche 
                 ? pb.files.getUrl(movie, movie.affiche) 
                 : null,
+            annee_sortie: movie.dateDeSortie 
+                ? new Date(movie.dateDeSortie).getUTCFullYear()
+                : "N/A",
         }));
 
         return updatedMovies;
@@ -121,6 +124,7 @@ export async function getMovies() {
         return null;
     }
 }
+
 
 export async function getActivites() {
     try {

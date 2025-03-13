@@ -3,21 +3,40 @@ import Layout from '../../layouts/LayoutWithHero.astro';
 import Card from '../../components/MovieCard.astro';
 import { getMovies } from '../../../backend/backend.mjs';
 import imgHero from '../../assets/img/hero_filmsbis.webp';
+import Button from '../../components/Button.astro';
 
 const films = await getMovies();
 console.log(films);
 
-const title = "Conservatoire Henri Dutilleux";
-const subTitle = "Conservatoire à Rayonnement Départemental du Grand Belfort";
-const subTitle2 = "test";
-const description = "Le Conservatoire Henri Dutilleux de Belfort vous accueille pour découvrir la musique, la danse et le théâtre.";
+const title = "Festival de Cinéma";
+const subTitle = "Découvrez notre sélection de films";
+const subTitle2 = "Édition 2025";
+const description = "Explorez notre catalogue complet de films pour cette édition du festival.";
+
 ---
 
-<Layout title={title} description={description} subTitle={subTitle} subTitle2={subTitle2} src={imgHero} alt="Violoncelliste" classContent="">
+<Layout title={title} description={description} subTitle={subTitle} subTitle2={subTitle2} src={imgHero} alt="Films du festival" classContent="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <Fragment slot="content">
-        <div class="viewMode === 'grid' ? 'grid grid-cols-1 lg:grid-cols-3 gap-4' : 'flex flex-col'"
-    >
-      {films && films.map((film) => <Card {...film} />)}
-    </div>
+        <div class="mb-8 flex flex-col sm:flex-row justify-between items-center">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-0">Notre sélection</h2>
+            <div class="flex items-center gap-3">
+                <span class="text-gray-600">{films && films.length ? `${films.length} films` : 'Chargement...'}</span>
+            </div>
+        </div>
+
+        <section>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10">
+                {films.map((film) => (
+                    <Card {...film} />
+                ))}
+            </div>
+        </section>
+
+        {films.length > 8 && (
+            <div class="mt-12 flex justify-center">
+                <Button variant="outlined" text="Charger plus" />
+            </div>
+        )}
     </Fragment>
-  </Layout>
+</Layout>
+

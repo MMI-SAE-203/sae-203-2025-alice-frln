@@ -1,43 +1,108 @@
 ---
 import { oneIDmovie } from '../../../backend/backend.mjs';
-import Layout  from '../../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
+import Button from '../../components/Button.astro';
 
 const { id } = Astro.params;
 const film = await oneIDmovie(id);
-console.log(film);
 
-if(!film){
-   return Astro.redirect('/films');
+if (!film) {
+    return Astro.redirect('/films');
 }
 
+const genres = Array.isArray(film.genre) ? film.genre.join(', ') : film.genre;
+const casting = Array.isArray(film.liste_acteurs) ? film.liste_acteurs.join(', ') : film.liste_acteurs;
 ---
 
-<Layout titre={film.titre_film}>
-    <h1 class="text-white">{film.titre_film}</h1>
-    <div>
-        <img src={film.affiche} alt="/"/>
+<Layout title={film.titre_film}>
+    <div class="bg-gray-900 text-white overflow-hidden">
+        <div class="relative">
+            <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
+            <div 
+                class="h-[50vh] w-full bg-cover bg-center" 
+                style={`background-image: url(${film.affiche})`}
+            ></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative -mt-32">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="md:col-span-1">
+                    <div class="rounded-lg overflow-hidden shadow-2xl">
+                        <img 
+                            src={film.affiche} 
+                            alt={film.titre_film}
+                            class="w-full h-auto"
+                        />
+                    </div>
+                    
+                    <div class="mt-6 bg-gray-800 p-4 rounded-lg">
+                        <h3 class="text-lg font-semibold mb-3">Informations</h3>
+                        <div class="space-y-2 text-gray-300">
+                            <p class="flex justify-between">
+                                <span>Année</span>
+                                <span class="font-medium">{film.annee_sortie || 'N/A'}</span>
+                            </p>
+                            <p class="flex justify-between">
+                                <span>Genre</span>
+                                <span class="font-medium">{genres || 'N/A'}</span>
+                            </p>
+                            <p class="flex justify-between">
+                                <span>Langue</span>
+                                <span class="font-medium">{film.langue || 'N/A'}</span>
+                            </p>
+                            <p class="flex justify-between">
+                                <span>Production</span>
+                                <span class="font-medium">{film.production || 'N/A'}</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:col-span-2">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">{film.titre_film}</h1>
+                    
+                    <div class="mb-6">
+                        <p class="text-xl text-gray-300">
+                            <span class="font-semibold">Réalisateur:</span> {film.realisateur || 'N/A'}
+                        </p>
+                        <p class="text-lg text-gray-300 mt-2">
+                            <span class="font-semibold">Avec:</span> {casting || 'N/A'}
+                        </p>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold mb-4">Synopsis</h2>
+                        <p class="text-gray-300 leading-relaxed">{film.synopsis || 'Aucun synopsis disponible.'}</p>
+                    </div>
+                    
+                    {film.embedUrl && (
+                        <div class="mb-8">
+                            <h2 class="text-2xl font-bold mb-4">Bande-annonce</h2>
+                            <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden">
+                                <iframe 
+                                    width="100%" 
+                                    height="100%" 
+                                    src={film.embedUrl} 
+                                    title={`Bande-annonce de ${film.titre_film}`}
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                    allowfullscreen
+                                    class="w-full h-full"
+                                ></iframe>
+                            </div>
+                        </div>
+                    )}
+                    
+                    <div class="flex flex-wrap gap-4 mt-6">
+                        <Button 
+                            variant="default" 
+                            size="large" 
+                            text="Revenir aux films" 
+                            url="/films" 
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <p>{film.genre}</p>
-    <p><p>{film.annee_sortie}</p></p>
-    <p>{film.langue}</p>
-    <p>Réalisateur : {film.synopsis}</p>
-    <p>Casting : {film.liste_acteurs}</p>
-    <p>Production : {film.production}</p>
-    <h2>Synopsis :</h2>
-    <p>{film.synopsis}</p>
-    <h2>Bande-annonce :</h2>
-    {film.embedUrl ? (
-        <iframe 
-            width="560" 
-            height="315" 
-            src={film.embedUrl} 
-            title="Bande-annonce de {film.titre_film}"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-            class="w-full max-w-2xl aspect-video rounded-lg shadow-lg"
-        ></iframe>
-    ) : (
-        <p>Aucune bande-annonce disponible.</p>
-    )}
 </Layout>

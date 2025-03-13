@@ -1,12 +1,30 @@
 ---
 const {...film} = Astro.props;
+import Button from './Button.astro';
 ---
 
-<div>
-    <img src={film.affiche} alt="/"/>
-    <h2>{film.titre_film}</h2>
-    <a href={`/films/${film.id}`}  
-       >
-        Voir plus
-    </a>
+<div class="bg-white rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] h-full flex flex-col">
+    <div class="relative pb-[150%] overflow-hidden">
+        <img 
+            src={film.affiche} 
+            alt={film.titre_film}
+            class="absolute top-0 left-0 w-full h-full object-cover"
+        />
+    </div>
+    <div class="p-4 flex flex-col flex-grow">
+        <h2 class="text-xl font-bold mb-3 line-clamp-2 text-black">{film.titre_film}</h2>
+        <div class="flex items-center gap-2 mb-3 text-sm text-gray-600">
+            <span>{film.annee_sortie || 'N/A'}</span>
+            {film.genre && <span>• {film.genre}</span>}
+        </div>
+
+        <div class="mt-auto">
+            <Button 
+                variant="default" 
+                size="medium" 
+                url={`/films/${film.id}`} 
+                text="Voir plus"
+            />
+        </div>
+    </div>
 </div>
