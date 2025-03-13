@@ -17,4 +17,27 @@ if(!film){
     <div>
         <img src={film.affiche} alt="/"/>
     </div>
+    <p>{film.genre}</p>
+    <p><p>{film.annee_sortie}</p></p>
+    <p>{film.langue}</p>
+    <p>Réalisateur : {film.synopsis}</p>
+    <p>Casting : {film.liste_acteurs}</p>
+    <p>Production : {film.production}</p>
+    <h2>Synopsis :</h2>
+    <p>{film.synopsis}</p>
+    <h2>Bande-annonce :</h2>
+    {film.embedUrl ? (
+        <iframe 
+            width="560" 
+            height="315" 
+            src={film.embedUrl} 
+            title="Bande-annonce de {film.titre_film}"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            class="w-full max-w-2xl aspect-video rounded-lg shadow-lg"
+        ></iframe>
+    ) : (
+        <p>Aucune bande-annonce disponible.</p>
+    )}
 </Layout>

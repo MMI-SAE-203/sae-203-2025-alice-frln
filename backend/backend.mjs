@@ -18,15 +18,46 @@ export async function allSortedInviteName () {
     return sortedInviteNameRecord ;
     }
 
+// export async function oneIDmovie(id) {
+//     try {
+//         const movie = await pb.collection('Films').getOne(id);
+
+//         return {
+//             ...movie,
+//             affiche: movie.affiche 
+//                 ? pb.files.getUrl(movie, movie.affiche) 
+//                 : null,
+//             annee_sortie: movie.dateDeSortie 
+//                 ? new Date(movie.dateDeSortie).getFullYear() 
+//                 : "N/A",
+//         };
+//     } catch (error) {
+//         console.error("Erreur lors de la récupération du film :", error);
+//         return null;
+//     }
+// }
+
 export async function oneIDmovie(id) {
     try {
         const movie = await pb.collection('Films').getOne(id);
+
+        let embedUrl = null;
+        if (movie.bande_annonce) {
+            const videoId = movie.bande_annonce.split('v=')[1]?.split('&')[0];
+            if (videoId) {
+                embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            }
+        }
 
         return {
             ...movie,
             affiche: movie.affiche 
                 ? pb.files.getUrl(movie, movie.affiche) 
                 : null,
+            annee_sortie: movie.dateDeSortie 
+                ? new Date(movie.dateDeSortie).getUTCFullYear()
+                : "N/A",
+            embedUrl,
         };
     } catch (error) {
         console.error("Erreur lors de la récupération du film :", error);
