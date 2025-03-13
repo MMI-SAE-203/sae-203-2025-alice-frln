@@ -2,12 +2,106 @@
 import LayoutWithHero from '../layouts/LayoutWithHero.astro';
 import imgHero from '../assets/img/hero_accueil.webp';
 
-const title = "Conservatoire Henri Dutilleux";
-const subTitle = "Conservatoire à Rayonnement Départemental du Grand Belfort";
-const description = "Le Conservatoire Henri Dutilleux de Belfort vous accueille pour découvrir la musique, la danse et le théâtre.";
+import partenaire1 from '../assets/img/partenaire_est_republicain.webp';
+import partenaire2 from '../assets/img/partenaires_cinema_aujourdhui.webp';
+import partenaire3 from '../assets/img/partenaires_mmi.webp';
+import partenaire4 from '../assets/img/partenaires-culture70.webp';
+
+const title = "Les ciné-échos";
+const subTitle = "Du Lundi 7 juillet au dimanche 13 juillet 2025 à Héricourt";
+
+const partenaires = [
+  { src: partenaire1.src, alt: "L'Est Républicain", title: "L'Est Républicain" },
+  { src: partenaire2.src, alt: "Cinéma Aujourd'hui", title: "Cinéma Aujourd'hui" },
+  { src: partenaire3.src, alt: "MMI", title: "MMI" },
+  { src: partenaire4.src, alt: "Culture 70", title: "Culture 70" }
+];
+
+const partenairesJSON = JSON.stringify(partenaires);
 ---
-<LayoutWithHero title={title} description={description} subTitle={subTitle} src={imgHero} alt="Violoncelliste" classContent="">
+
+<LayoutWithHero title={title} subTitle={subTitle} src={imgHero} alt="Violoncelliste" classContent="">
   <Fragment slot="content">
-	  <p>Contenu principal de la page</p>
+    <section class="py-12 bg-white">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-10 text-black">Nos partenaires</h2>
+        
+        <div 
+          x-data="{
+            partners: [],
+            activeSlide: 0,
+            totalSlides: 0,
+            
+            init() {
+              // Récupération des données depuis la variable définie par Astro
+              this.partners = JSON.parse(document.getElementById('partenairesData').textContent);
+              this.totalSlides = this.partners.length;
+              
+              // Démarrer l'autoplay
+              setInterval(() => {
+                this.next();
+              }, 4000);
+            },
+            
+            next() {
+              this.activeSlide = (this.activeSlide + 1) % this.totalSlides;
+            },
+            
+            prev() {
+              this.activeSlide = (this.activeSlide - 1 + this.totalSlides) % this.totalSlides;
+            }
+          }"
+          class="relative"
+        >
+          <script type="application/json" id="partenairesData" set:html={partenairesJSON}></script>
+          
+          <div class="relative overflow-hidden h-64 bg-gray-100 rounded-lg">
+            <template x-for="(partner, index) in partners" :key="index">
+              <div 
+                class="absolute inset-0 flex flex-col items-center justify-center p-6 transition-opacity duration-500"
+                :class="activeSlide === index ? 'opacity-100' : 'opacity-0 pointer-events-none'"
+              >
+                <img :src="partner.src" :alt="partner.alt" class="max-h-36 max-w-full object-contain" />
+                <p class="mt-4 text-lg font-medium text-center" x-text="partner.title"></p>
+              </div>
+            </template>
+          </div>
+          
+          <button 
+            @click="prev" 
+            class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md"
+          >
+            &larr;
+          </button>
+          
+          <button 
+            @click="next" 
+            class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md"
+          >
+            &rarr;
+          </button>
+          
+          <div class="flex justify-center mt-4 space-x-2">
+            <template x-for="(_, index) in partners" :key="index">
+              <button 
+                @click="activeSlide = index" 
+                class="w-3 h-3 rounded-full transition-colors"
+                :class="activeSlide === index ? 'bg-blue-600' : 'bg-gray-300'"
+              ></button>
+            </template>
+          </div>
+        </div>
+        
+        <!-- Version statique (fallback) pour déboguer -->
+        <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6">
+          {partenaires.map(partner => (
+            <div class="p-4 flex flex-col items-center justify-center bg-gray-50 rounded-lg shadow-md">
+              <img src={partner.src} alt={partner.alt} class="max-h-32 max-w-full object-contain" />
+              <p class="mt-4 text-center font-medium">{partner.title}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   </Fragment>
 </LayoutWithHero>

@@ -14,10 +14,9 @@ console.log(types);
 const title = "Festival de Cinéma";
 const subTitle = "Découvrez notre sélection d'actvités";
 const subTitle2 = "Édition 2025";
-const description = "Découvrez les activités culturelles et artistiques proposées lors du festival.";
 ---
 
-<Layout title={title} description={description} subTitle={subTitle} subTitle2={subTitle2} src={imgHero} alt="Violoncelliste" classContent="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+<Layout title={title} subTitle={subTitle} subTitle2={subTitle2} src={imgHero} alt="Violoncelliste" classContent="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <Fragment slot="content">
         <div x-data="{ 
             selectedType: '', 
