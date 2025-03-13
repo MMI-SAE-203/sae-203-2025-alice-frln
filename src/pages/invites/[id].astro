@@ -1,17 +1,18 @@
 ---
-import { oneIDinvite, allMoviesByInviteId } from '../../../backend/backend.mjs';
+import { oneIDinvite, allMoviesByInviteId, allActivitesByInviteId } from '../../../backend/backend.mjs';
 import Layout  from '../../layouts/Layout.astro';
 import MovieCard from '../../components/MovieCard.astro';
+import ActiviteCard from '../../components/ActiviteCard.astro'; // Ajout pour les activités
 
 const { id } = Astro.params;
 const invite = await oneIDinvite(id);
 const movies = await allMoviesByInviteId(id);
-console.log(invite, movies);
+const activites = await allActivitesByInviteId(id);
+console.log(invite, movies, activites);
 
 if (!invite) {
    return Astro.redirect('/invites');
 }
-
 ---
 
 <Layout titre={invite.nom}>
@@ -23,9 +24,9 @@ if (!invite) {
         <p>Biographie<br>{invite.biographie}</p>
     </div>
 
-    <div>
-        <p>Projections et activités :</p>
-        <div>
+    <div class="px-4 sm:px-6 lg:px-12">
+        <h2>Films présentés</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {movies.length > 0 ? (
                 movies.map((movie) => <MovieCard {...movie} />)
             ) : (
@@ -33,4 +34,15 @@ if (!invite) {
             )}
         </div>
     </div>
+    
+    <div class="px-4 sm:px-6 lg:px-12 mt-8">
+        <h2>Activités animées</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {activites.length > 0 ? (
+                activites.map((activite) => <ActiviteCard {...activite} />)
+            ) : (
+                <p>Aucune activité animée par cet invité.</p>
+            )}
+        </div>
+    </div>    
 </Layout>

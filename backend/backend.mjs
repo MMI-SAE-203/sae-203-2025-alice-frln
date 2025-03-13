@@ -186,3 +186,24 @@ export async function allMoviesByInviteId(id) {
         return null;
     }
 }
+
+export async function allActivitesByInviteId(id) {
+    try {
+        let activites = await pb.collection('activites').getFullList({
+            filter : `anime_par.id= '${id}'`,
+            expand : 'anime_par',
+        });
+
+        const updatedActivitesID = activites.map((activite) => ({
+            ...activite,
+            imageActivite: activite.imageActivite 
+                ? pb.files.getUrl(activite, activite.imageActivite) 
+                : null,
+        }));
+
+        return updatedActivitesID;
+    } catch (error) {
+        console.log('Une erreur est survenue en lisant la liste des activités de l invité', error);
+        return null;
+    }
+}
