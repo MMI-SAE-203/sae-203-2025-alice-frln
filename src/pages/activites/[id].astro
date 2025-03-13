@@ -17,7 +17,7 @@ if(!activite){
     <div>
         <img src={activite.imageActivite} alt="/"/>
     </div>
-    <p>Animé par {activite.anime_par}</p>
+    <p>Animé par {activite.expand?.anime_par.nom}  {activite.expand?.anime_par.prenom}</p>
     <p>Type : {activite.type}</p>
     <p>Lieu : {activite.lieu}</p>
     <p>{activite.description}</p>

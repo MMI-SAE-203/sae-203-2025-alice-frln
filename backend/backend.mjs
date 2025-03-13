@@ -48,7 +48,7 @@ export async function oneIDmovie(id) {
     
 export async function oneIDactivite(id) {
     try {
-        const activite = await pb.collection('activites').getOne(id);
+        const activite = await pb.collection('activites').getOne(id, { expand: 'anime_par' });
 
         return {
             ...activite,
@@ -220,5 +220,35 @@ export async function allActivitesByInviteId(id) {
     } catch (error) {
         console.log('Une erreur est survenue en lisant la liste des activités de l invité', error);
         return null;
+    }
+}
+
+export async function filterByGenre(genre) {
+    try {
+        let filterQuery = genre ? `Genre ~ "${genre}"` : "";
+
+        console.log("Filtrage des films avec le genre :", genre);
+
+        let movies = await pb.collection('Films').getFullList({
+            filter: filterQuery,
+            sort: 'date_projection',
+        });
+
+        console.log("Films récupérés après filtrage :", movies.length);
+
+        const updatedMovies = movies.map((movie) => ({
+            ...movie,
+            affiche: movie.affiche 
+                ? pb.files.getUrl(movie, movie.affiche) 
+                : null,
+            annee_sortie: movie.dateDeSortie 
+                ? new Date(movie.dateDeSortie).getUTCFullYear()
+                : "N/A",
+        }));
+
+        return updatedMovies;
+    } catch (error) {
+        console.log('Erreur lors du filtrage des films par genre', error);
+        return [];
     }
 }
