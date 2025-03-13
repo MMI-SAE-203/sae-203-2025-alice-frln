@@ -8,35 +8,58 @@ import Button from '../../components/Button.astro';
 const films = await getMovies();
 console.log(films);
 
+const genres = [...new Set(films.map(film => film.Genre).filter(genre => genre))];
+console.log(genres); 
+
 const title = "Festival de Cinéma";
 const subTitle = "Découvrez notre sélection de films";
 const subTitle2 = "Édition 2025";
 const description = "Explorez notre catalogue complet de films pour cette édition du festival.";
-
 ---
 
 <Layout title={title} description={description} subTitle={subTitle} subTitle2={subTitle2} src={imgHero} alt="Films du festival" classContent="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <Fragment slot="content">
-        <div class="mb-8 flex flex-col sm:flex-row justify-between items-center">
-            <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-0">Notre sélection</h2>
-            <div class="flex items-center gap-3">
-                <span class="text-gray-600">{films && films.length ? `${films.length} films` : 'Chargement...'}</span>
+        <div x-data="{ 
+            selectedGenre: '', 
+            filmsCount: films.length 
+        }">
+            <div class="mb-8 flex flex-col sm:flex-row justify-between items-center">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-0">Notre sélection</h2>
+                <div class="flex flex-col sm:flex-row items-center gap-3">
+                    <div class="relative">
+                        <select 
+                            x-model="selectedGenre" 
+                            @change="console.log('Selected Genre:', selectedGenre); filmsCount = document.querySelectorAll('.film-card[style*=\'display: block\']').length || document.querySelectorAll('.film-card:not([style*=\'display: none\'])').length"
+                            class="bg-gray-800 text-white border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                        >
+                            <option value="">Tous les genres</option>
+                            {genres.map((genre) => (
+                                <option value={genre}>{genre}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <span class="text-gray-600" x-text="filmsCount + ' films'"></span>
+                </div>
             </div>
-        </div>
 
-        <section>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10">
-                {films.map((film) => (
-                    <Card {...film} />
-                ))}
-            </div>
-        </section>
+            <section>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10">
+                    {films.map((film) => (
+                        <div 
+                            class="film-card" 
+                            x-show="selectedGenre === '' || '{film.Genre}' === selectedGenre"
+                            data-genre={film.Genre}
+                            x-init="console.log('Film:', { film }, 'Genre:', '{film.Genre}', 'Selected Genre:', selectedGenre)"
+                        >
+                            <Card {...film} />
+                        </div>
+                    ))}
+                </div>
+            </section>
 
-        {films.length > 8 && (
-            <div class="mt-12 flex justify-center">
+            <div class="mt-12 flex justify-center" x-show="filmsCount > 8">
                 <Button variant="outlined" text="Charger plus" />
             </div>
-        )}
+        </div>
     </Fragment>
 </Layout>
-

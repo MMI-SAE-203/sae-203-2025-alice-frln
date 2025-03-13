@@ -10,7 +10,7 @@ if (!film) {
     return Astro.redirect('/films');
 }
 
-const genres = Array.isArray(film.genre) ? film.genre.join(', ') : film.genre;
+const genres = Array.isArray(film.genre) ? film.Genre.join(', ') : film.Genre;
 const casting = Array.isArray(film.liste_acteurs) ? film.liste_acteurs.join(', ') : film.liste_acteurs;
 ---
 
