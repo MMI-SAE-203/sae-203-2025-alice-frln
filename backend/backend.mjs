@@ -137,6 +137,20 @@ export async function getActivites() {
             imageActivite: activite.imageActivite 
                 ? pb.files.getUrl(activite, activite.imageActivite) 
                 : null,
+            dateFormatted: activite.date 
+                ? new Date(activite.date).toLocaleDateString('fr-FR', {
+                    weekday: 'long', 
+                    day: 'numeric', 
+                    month: 'long', 
+                    year: 'numeric'
+                })
+                : "Date inconnue",
+            heureFormatted: activite.date 
+                ? new Date(activite.date).toLocaleTimeString('fr-FR', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                })
+                : "Heure inconnue",
         }));
 
         return updatedActivites;
@@ -146,6 +160,7 @@ export async function getActivites() {
     }
 }
 
+ 
 export async function getInvites() {
     try {
         let invites = await pb.collection('invites').getFullList({

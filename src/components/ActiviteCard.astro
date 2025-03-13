@@ -1,12 +1,36 @@
 ---
 const {...activite} = Astro.props;
+import Button from './Button.astro';
 ---
 
-<div>
-    <img src={activite.imageActivite} alt="/"/>
-    <h1>{activite.titre}</h1>
-    <a href={`/activites/${activite.id}`}  
-       >
-        Voir plus
-    </a>
+<div class="bg-white rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:shadow-xl hover:scale-[1.02] h-full flex flex-col">
+    <!-- Image de l'activité -->
+    <div class="relative pb-[150%] overflow-hidden">
+        <img 
+            src={activite.imageActivite} 
+            alt={activite.titre}
+            class="absolute top-0 left-0 w-full h-full object-cover"
+        />
+    </div>
+
+    <!-- Contenu de la carte -->
+    <div class="p-4 flex flex-col flex-grow">
+        <h2 class="text-xl font-bold mb-3 line-clamp-2 text-black">{activite.titre}</h2>
+        
+        <!-- Informations supplémentaires -->
+        <div class="flex items-center gap-2 mb-3 text-sm text-gray-600">
+            <span>{activite.date || 'Date inconnue'}</span>
+            {activite.type && <span>• {activite.type}</span>}
+        </div>
+
+        <!-- Bouton "Voir plus" -->
+        <div class="mt-auto">
+            <Button 
+                variant="default" 
+                size="medium" 
+                url={`/activites/${activite.id}`} 
+                text="Voir plus"
+            />
+        </div>
+    </div>
 </div>

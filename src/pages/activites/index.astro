@@ -3,20 +3,63 @@ import Layout from '../../layouts/LayoutWithHero.astro';
 import Card from '../../components/ActiviteCard.astro';
 import { getActivites } from '../../../backend/backend.mjs';
 import imgHero from '../../assets/img/hero_activites.webp';
+import Button from '../../components/Button.astro';
 
 const activites = await getActivites();
 console.log(activites);
 
-const title = "Conservatoire Henri Dutilleux";
-const subTitle = "Conservatoire à Rayonnement Départemental du Grand Belfort";
-const description = "Le Conservatoire Henri Dutilleux de Belfort vous accueille pour découvrir la musique, la danse et le théâtre.";
+const types = [...new Set(activites.map(activite => activite.type).filter(type => type))];
+console.log(types);
+
+const title = "Festival de Cinéma";
+const subTitle = "Découvrez notre sélection d'actvités";
+const subTitle2 = "Édition 2025";
+const description = "Découvrez les activités culturelles et artistiques proposées lors du festival.";
 ---
 
-<Layout title={title} description={description} subTitle={subTitle} src={imgHero} alt="Violoncelliste" classContent="">
+<Layout title={title} description={description} subTitle={subTitle} subTitle2={subTitle2} src={imgHero} alt="Violoncelliste" classContent="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <Fragment slot="content">
-        <div class="viewMode === 'grid' ? 'grid grid-cols-1 lg:grid-cols-3 gap-4' : 'flex flex-col'"
-    >
-      {activites && activites.map((activite) => <Card {...activite} />)}
-    </div>
+        <div x-data="{ 
+            selectedType: '', 
+            activitesCount: activites.length 
+        }">
+            <div class="mb-8 flex flex-col sm:flex-row justify-between items-center">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-0">Nos Activités</h2>
+                <div class="flex flex-col sm:flex-row items-center gap-3">
+                    <div class="relative">
+                        <select 
+                            x-model="selectedType" 
+                            @change="console.log('Selected Type:', selectedType); activitesCount = document.querySelectorAll('.activite-card[style*=\'display: block\']').length || document.querySelectorAll('.activite-card:not([style*=\'display: none\'])').length"
+                            class="bg-gray-800 text-white border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
+                        >
+                            <option value="">Toutes les activités</option>
+                            {types.map((type) => (
+                                <option value={type}>{type}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <span class="text-gray-600" x-text="activitesCount + ' activités'"></span>
+                </div>
+            </div>
+
+            <section>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10">
+                    {activites.map((activite) => (
+                        <div 
+                            class="activite-card" 
+                            x-show="selectedType === '' || '{activite.type}' === selectedType"
+                            data-type={activite.type}
+                            x-init="console.log('Activité:', { activite }, 'Type:', '{activite.type}', 'Selected Type:', selectedType)"
+                        >
+                            <Card {...activite} />
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            <div class="mt-12 flex justify-center" x-show="activitesCount > 8">
+                <Button variant="outlined" text="Charger plus" />
+            </div>
+        </div>
     </Fragment>
-  </Layout>
+</Layout>
