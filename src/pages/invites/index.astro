@@ -7,12 +7,12 @@ import imgHero from '../../assets/img/hero_invites.webp';
 const invites = await getInvites();
 console.log(invites);
 
-const title = "Conservatoire Henri Dutilleux";
-const subTitle = "Conservatoire à Rayonnement Départemental du Grand Belfort";
-const description = "Le Conservatoire Henri Dutilleux de Belfort vous accueille pour découvrir la musique, la danse et le théâtre.";
+const title = "Festival de Cinéma";
+const subTitle = "Découvrez nos invités et nos animateurs";
+const subTitle2 = "Édition 2025";
 ---
 
-<Layout title={title} description={description} subTitle={subTitle} src={imgHero} alt="Violoncelliste" classContent="">
+<Layout title={title} subTitle2={subTitle2} subTitle={subTitle} src={imgHero} alt="Violoncelliste" classContent="">
     <Fragment slot="content">
         <div class="viewMode === 'grid' ? 'grid grid-cols-1 lg:grid-cols-3 gap-4' : 'flex flex-col'"
     >

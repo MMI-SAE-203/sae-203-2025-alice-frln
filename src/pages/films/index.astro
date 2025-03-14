@@ -1,63 +1,34 @@
 ---
 import Layout from '../../layouts/LayoutWithHero.astro';
-import Card from '../../components/MovieCard.astro';
-import { getMovies, filterByGenre } from '../../../backend/backend.mjs';
-import imgHero from '../../assets/img/hero_filmsbis.webp';
-import Button from '../../components/Button.astro';
+import ActiviteCard from '../../components/ActiviteCard.astro';
+import { getActivites } from '../../../backend/backend.mjs';
+import imgHero from '../../assets/img/hero_activites.webp';
 
-// Récupérer les paramètres d'URL
-const params = new URLSearchParams(Astro.url.search);
-const selectedGenre = params.get('genre') || "";
-
-// Récupérer les films selon le filtre
-const films = await filterByGenre(selectedGenre);
-
-// Extraire les genres disponibles
-const genres = [...new Set(films.flatMap(film => film.Genre ? film.Genre.split(', ') : []))];
+const activites = await getActivites();
 
 const title = "Festival de Cinéma";
 const subTitle = "Découvrez notre sélection de films";
 const subTitle2 = "Édition 2025";
 ---
 
-<Layout title={title} subTitle={subTitle} subTitle2={subTitle2} src={imgHero} alt="Films du festival" classContent="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <Fragment slot="content">
-        <form 
-            method="get"
-            class="mb-8 flex flex-col sm:flex-row justify-between items-center gap-4"
-        >
-            <h2 class="text-2xl sm:text-3xl font-bold">Notre sélection</h2>
+<Layout title={title} subTitle={subTitle} subTitle2={subTitle2} src={imgHero} alt="Activités du festival" classContent="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <Fragment slot="content">
+    <div class="mb-8 flex flex-col sm:flex-row justify-between items-center">
+      <h2 class="text-2xl sm:text-3xl font-bold">Nos Activités</h2>
+    </div>
 
-            <div class="flex items-center gap-3">
-                <label for="genreSelect" class="text-gray-600">Filtrer par genre :</label>
-                <select 
-                    id="genreSelect"
-                    name="genre"
-                    class="bg-gray-800 text-white border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500"
-                    onchange="this.form.submit()"
-                >
-                    <option value="">Tous les genres</option>
-                    {genres.map((genre) => (
-                        <option value={genre} selected={selectedGenre === genre}>{genre}</option>
-                    ))}
-                </select>
+    <section>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {activites.length > 0 ? (
+          activites.map((activite) => (
+            <div class="flex flex-col h-full">
+              <ActiviteCard {...activite} />
             </div>
-        </form>
-
-        <section>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-10">
-                {films.length > 0 ? (
-                    films.map((film) => <Card {...film} />)
-                ) : (
-                    <p class="text-center text-gray-600 col-span-full">Aucun film trouvé pour ce genre.</p>
-                )}
-            </div>
-        </section>
-
-        {films.length > 8 && (
-            <div class="mt-12 flex justify-center">
-                <Button variant="outlined" text="Charger plus" />
-            </div>
+          ))
+        ) : (
+          <p class="text-center text-gray-600 col-span-full">Aucune activité disponible.</p>
         )}
-    </Fragment>
+      </div>
+    </section>
+  </Fragment>
 </Layout>
